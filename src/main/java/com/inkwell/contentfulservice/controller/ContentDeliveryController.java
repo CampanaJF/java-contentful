@@ -4,9 +4,9 @@ import com.contentful.java.cda.CDAArray;
 import com.contentful.java.cda.CDAAsset;
 import com.contentful.java.cda.CDAClient;
 import com.contentful.java.cda.CDAEntry;
+import com.inkwell.contentfulservice.client.ContentfulClient;
 import com.inkwell.contentfulservice.model.Product;
 import com.inkwell.contentfulservice.model.ProductCollection;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,16 +22,10 @@ import static com.contentful.java.cda.QueryOperation.IsEqualTo;
 
 @Log4j2
 @RestController
-@RequestMapping("content")
+@RequestMapping("v1/content")
 public class ContentDeliveryController {
 
-    Dotenv dotenv = Dotenv.load();
-
-    CDAClient client = CDAClient.builder()
-            .setSpace(dotenv.get("CONTENTFUL_SPACE"))
-            .setToken(dotenv.get("CONTENTFUL_TOKEN"))
-            .setEnvironment("dev")
-            .build();
+    CDAClient client = ContentfulClient.get();
 
     // the way CDAArray fetches stuff is funny, within the array there are assets and entries, however
     // while these are associated, they don't come together, so it's necessary to fetch both and then join
@@ -80,7 +74,7 @@ public class ContentDeliveryController {
     // this transforms the result into whatever the class in the paramater is, naturally it tries to make it fit
     // there are some complex reactions here but overall it was made to function as required, a little dirty
     // but as Todd would say, it just works
-    @GetMapping("/fetchAllProducts")
+    @GetMapping("/getProducts")
     public ResponseEntity<Collection<Product>> fetchAllProducts() {
 
         Collection<Product> found = client
@@ -95,7 +89,7 @@ public class ContentDeliveryController {
     // our own, then the where clause lets us search for the specific field entry we want, all allows us to search all the entries
     // otherwise we would only get a specific one, blocking means it will only take the first result and only one result
     // otherwise it throws an exception iterator and next are necessary since the result is always a collection
-    @GetMapping("/fetchAProduct")
+    @GetMapping("/getProduct")
     public ResponseEntity<Product> fetchAProduct() {
 
         Product found = client
@@ -109,8 +103,8 @@ public class ContentDeliveryController {
         return new ResponseEntity<>(found,HttpStatus.OK);
     }
 
-    @GetMapping("/productCollection")
-    public ResponseEntity<ProductCollection> collection() {
+    @GetMapping("/getProductCollection")
+    public ResponseEntity<ProductCollection> getCollection() {
 
         ProductCollection found = client
                 .observeAndTransform(ProductCollection.class)
@@ -123,8 +117,8 @@ public class ContentDeliveryController {
         return new ResponseEntity<>(found,HttpStatus.OK);
     }
 
-    @GetMapping("/productCollection2")
-    public ResponseEntity<Collection<ProductCollection>> collection2() {
+    @GetMapping("/productCollections")
+    public ResponseEntity<Collection<ProductCollection>> getCollections() {
 
         Collection<ProductCollection> found = client
                 .observeAndTransform(ProductCollection.class)

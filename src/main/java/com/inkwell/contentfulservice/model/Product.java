@@ -30,6 +30,6 @@ public class Product {
 
     @ContentfulField("thumbnail")
     @JsonSerialize(using = CDAAssetSerializer.class)
-    private CDAAsset thumbnail;
+    private CDAAsset url;
 
 }

@@ -10,8 +10,6 @@ public class CDAAssetSerializer extends JsonSerializer<CDAAsset> {
 
     @Override
     public void serialize(CDAAsset asset, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField("url", asset.url());
-        jsonGenerator.writeEndObject();
+        jsonGenerator.writeString(asset.url());
     }
 }
