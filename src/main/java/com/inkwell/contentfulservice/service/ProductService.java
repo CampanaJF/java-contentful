@@ -6,7 +6,7 @@ import com.inkwell.contentfulservice.model.ProductDetail;
 
 import java.util.List;
 
-public interface ContentfulService {
+public interface ProductService {
 
     ProductCollection getProductCollection(String productId);
 
@@ -17,5 +17,7 @@ public interface ContentfulService {
     List<Product> getProducts();
 
     ProductDetail getProductDetails(String productId);
+
+    String richProcessor(String productId);
 
 }

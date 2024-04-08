@@ -3,7 +3,7 @@ package com.inkwell.contentfulservice.controller;
 import com.inkwell.contentfulservice.model.Product;
 import com.inkwell.contentfulservice.model.ProductCollection;
 import com.inkwell.contentfulservice.model.ProductDetail;
-import com.inkwell.contentfulservice.service.ContentfulService;
+import com.inkwell.contentfulservice.service.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -21,13 +21,8 @@ import java.util.Collection;
 @AllArgsConstructor
 public class ContentDeliveryController {
 
-    //CDAClient client = ContentfulClient.get();
+    private final ProductService service;
 
-    private final ContentfulService service;
-
-    // this transforms the result into whatever the class in the paramater is, naturally it tries to make it fit
-    // there are some complex reactions here but overall it was made to function as required, a little dirty
-    // but as Todd would say, it just works
     @GetMapping("/getProducts")
     public ResponseEntity<Collection<Product>> fetchAllProducts() {
 
@@ -36,10 +31,6 @@ public class ContentDeliveryController {
         return new ResponseEntity<>(found,HttpStatus.OK);
     }
 
-    // The search works like this: first observeAndTransforms lets us take the result and map the contents to a class of
-    // our own, then the where clause lets us search for the specific field entry we want, all allows us to search all the entries
-    // otherwise we would only get a specific one, blocking means it will only take the first result and only one result
-    // otherwise it throws an exception iterator and next are necessary since the result is always a collection
     @GetMapping("/getProduct/{productId}")
     public ResponseEntity<Product> fetchAProduct(
             @PathVariable("productId") String productId) {
@@ -71,6 +62,15 @@ public class ContentDeliveryController {
             @PathVariable("productId") String productId) {
 
         ProductDetail found = service.getProductDetails(productId);
+
+        return new ResponseEntity<>(found,HttpStatus.OK);
+    }
+
+    @GetMapping("/rich/{productId}")
+    public ResponseEntity<String> richTermsOfUse(
+            @PathVariable("productId") String productId) {
+
+        String found = service.richProcessor(productId);
 
         return new ResponseEntity<>(found,HttpStatus.OK);
     }

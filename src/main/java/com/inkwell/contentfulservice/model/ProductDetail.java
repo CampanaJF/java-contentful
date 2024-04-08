@@ -52,7 +52,4 @@ public class ProductDetail {
     @TransformQuery.ContentfulField("cashbackPeriod")
     private String cashbackPeriod;
 
-//    @TransformQuery.ContentfulField("termsOfUse")
-//    private String terms;
-
 }
