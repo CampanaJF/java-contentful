@@ -65,13 +65,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDetail getProductDetails(String productId) {
-        return client
+        ProductDetail found = client
                 .observeAndTransform(ProductDetail.class)
                 .where("sys.id", IsEqualTo, productId)
                 .all()
                 .blockingFirst()
                 .iterator()
                 .next();
+
+        found.setTermsOfUse(processRichDocument(found.getRichDocument()));
+
+        return found;
     }
 
     @Override
@@ -86,6 +90,16 @@ public class ProductServiceImpl implements ProductService {
         final HtmlContext context = new HtmlContext();
 
         String html = processor.process(context, node);
+
+        return StringEscapeUtils.unescapeHtml4(html);
+    }
+
+    @Override
+    public String processRichDocument(CDARichDocument doc) {
+        final HtmlProcessor processor = new HtmlProcessor();
+        final HtmlContext context = new HtmlContext();
+
+        String html = processor.process(context, doc);
 
         return StringEscapeUtils.unescapeHtml4(html);
     }

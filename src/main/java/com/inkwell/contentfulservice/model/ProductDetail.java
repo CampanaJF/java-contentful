@@ -2,6 +2,8 @@ package com.inkwell.contentfulservice.model;
 
 import com.contentful.java.cda.CDAAsset;
 import com.contentful.java.cda.TransformQuery;
+import com.contentful.java.cda.rich.CDARichDocument;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.inkwell.contentfulservice.tool.CDAAssetSerializer;
 import lombok.AllArgsConstructor;
@@ -14,8 +16,8 @@ import java.util.List;
 @TransformQuery.ContentfulEntryModel("productDetail")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductDetail {
 
     @TransformQuery.ContentfulSystemField
@@ -51,5 +53,11 @@ public class ProductDetail {
 
     @TransformQuery.ContentfulField("cashbackPeriod")
     private String cashbackPeriod;
+
+    @TransformQuery.ContentfulField("termsOfUse")
+    @JsonIgnore
+    private CDARichDocument richDocument;
+
+    private String termsOfUse;
 
 }

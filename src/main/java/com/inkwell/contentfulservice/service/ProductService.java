@@ -1,5 +1,6 @@
 package com.inkwell.contentfulservice.service;
 
+import com.contentful.java.cda.rich.CDARichDocument;
 import com.inkwell.contentfulservice.model.Product;
 import com.inkwell.contentfulservice.model.ProductCollection;
 import com.inkwell.contentfulservice.model.ProductDetail;
@@ -19,5 +20,7 @@ public interface ProductService {
     ProductDetail getProductDetails(String productId);
 
     String richProcessor(String productId);
+
+    String processRichDocument(CDARichDocument doc);
 
 }

@@ -23,6 +23,7 @@ public class ContentDeliveryController {
 
     private final ProductService service;
 
+    // this is not necessary
     @GetMapping("/getProducts")
     public ResponseEntity<Collection<Product>> fetchAllProducts() {
 
@@ -31,6 +32,7 @@ public class ContentDeliveryController {
         return new ResponseEntity<>(found,HttpStatus.OK);
     }
 
+    // this is not necessary
     @GetMapping("/getProduct/{productId}")
     public ResponseEntity<Product> fetchAProduct(
             @PathVariable("productId") String productId) {
@@ -40,6 +42,7 @@ public class ContentDeliveryController {
         return new ResponseEntity<>(found,HttpStatus.OK);
     }
 
+    // this is not necessary
     @GetMapping("/getProductCollection/{productId}")
     public ResponseEntity<ProductCollection> getProductCollection(
             @PathVariable("productId") String productId) {
