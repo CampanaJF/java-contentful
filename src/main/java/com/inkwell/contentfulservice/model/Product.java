@@ -6,6 +6,7 @@ import com.contentful.java.cda.TransformQuery.ContentfulField;
 import com.contentful.java.cda.TransformQuery.ContentfulSystemField;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.inkwell.contentfulservice.tool.CDAAssetSerializer;
+import com.inkwell.contentfulservice.tool.ProductDetailSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,10 @@ public class Product {
 
     @ContentfulField("slug")
     private String slug;
+
+    @ContentfulField("productDetail")
+    @JsonSerialize(using = ProductDetailSerializer.class)
+    private ProductDetail detailId;
 
     @ContentfulField("thumbnail")
     @JsonSerialize(using = CDAAssetSerializer.class)

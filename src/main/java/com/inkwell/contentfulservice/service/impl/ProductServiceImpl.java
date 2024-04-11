@@ -94,8 +94,7 @@ public class ProductServiceImpl implements ProductService {
         return StringEscapeUtils.unescapeHtml4(html);
     }
 
-    @Override
-    public String processRichDocument(CDARichDocument doc) {
+    private String processRichDocument(CDARichDocument doc) {
         final HtmlProcessor processor = new HtmlProcessor();
         final HtmlContext context = new HtmlContext();
 
