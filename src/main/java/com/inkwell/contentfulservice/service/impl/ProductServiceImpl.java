@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductCollection getProductCollection(String productId) {
         return client
                 .observeAndTransform(ProductCollection.class)
+                .include(2)
                 .where("sys.id", IsEqualTo, productId)
                 .all()
                 .blockingFirst()
@@ -36,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductCollection> getProductCollections() {
         return client
                 .observeAndTransform(ProductCollection.class)
+                .include(2)
                 .all()
                 .blockingFirst()
                 .stream()
